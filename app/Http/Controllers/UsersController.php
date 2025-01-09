@@ -8,14 +8,19 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    
+    public readonly User $user;
+    public function __construct() {
+        $this->user = new User();
+    }
   
 
     public function index()
     {
+        // $users = $this->user->all();
+        // return view('users', ['users' => $users]);
         $users = User::all();
-        return($users);
-
+        return view('users', ['users' => $users]);
+        
     }
 
     /**
@@ -45,9 +50,9 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('user_edit', ['user'=> $user]);
     }
 
     /**
@@ -55,7 +60,12 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updated = $this->user->where('id', $id)->update($request->except(['_token', '_method']));
+        
+        if ($updated) {
+            return redirect()->back()->with('message', 'Atualizado com Sucesso', 200);
+    
+        }  return redirect()->back()->with('message', 'Erro de Atualização', 400);
     }
 
     /**

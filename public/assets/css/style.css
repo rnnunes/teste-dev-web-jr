@@ -4,3 +4,9 @@
 body {
     font-family: "Open Sans", serif;
 }
+
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
