@@ -13,12 +13,12 @@ class UsersController extends Controller
         $this->user = new User();
     }
   
-
     public function index()
     {
-        // $users = $this->user->all();
+        // $users = User::all();
         // return view('users', ['users' => $users]);
-        $users = User::all();
+
+        $users = $this->user->all();
         return view('users', ['users' => $users]);
         
     }
@@ -28,7 +28,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('user_create');
     }
 
     /**
@@ -36,15 +36,25 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // var_dump($request->except(['_token']));
+        $created = $this->user->create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => password_hash($request->input('password'),PASSWORD_DEFAULT),
+        ]);
+
+        if ($created) {
+            return redirect()->back()->with('message', 'Criado com Sucesso!', 201);
+    
+        }  return redirect()->back()->with('message', 'Erro de Criação!', 400);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user)
     {
-        //
+        return view('user_show', ['user'=> $user]);
     }
 
     /**
@@ -73,6 +83,6 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        var_dump('delete');
     }
 }
