@@ -36,17 +36,25 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        // var_dump($request->except(['_token']));
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'min:6'],
+            ],
+        );
+        
         $created = $this->user->create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => password_hash($request->input('password'),PASSWORD_DEFAULT),
+            'password' => bcrypt($request->input('password')),
         ]);
 
         if ($created) {
-            return redirect()->back()->with('message', 'Criado com Sucesso!', 201);
+            return redirect()->back()->with('message', 'Cadastrado com Sucesso', 200);
     
-        }  return redirect()->back()->with('message', 'Erro de Criação!', 400);
+        }  return redirect()->back()->with('message', 'Senha deve ter mais 6 caracteres ou email invalido!', 400);
+
     }
 
     /**
@@ -83,6 +91,8 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        var_dump('delete');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'Usuário deletado com sucesso!');
     }
 }

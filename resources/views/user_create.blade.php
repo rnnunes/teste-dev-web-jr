@@ -3,7 +3,8 @@
 
 @section('content')
 
-<h2>Cadastro</h2>
+
+<h2>Cadastro de Usuarios</h2>
 
 @if (session()->has('message'))
     {{ session()->get('message') }}
@@ -17,5 +18,8 @@
 
     <button type="submit">Cadastro</button>
 </form>
+
+<hr>
+<a href="{{ route('users.index') }}"><button>Retornar</button></a>
 
 @endsection
