@@ -64,3 +64,44 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+**************************************************************************
+                Instruções de como rodar o projeto
+**************************************************************************
+
+1) instalar as dependencias do Composer:
+-> executar o comando no terminal "composer install"
+
+*possiveis erros: erro de versão do PHP é nescessario a versão 8.2 para frente
+
+2) instalar as dependencias do Composer:
+-> duplicar env.example e deixar o nome .env
+
+3) No arquivo .env
+-> executar o comando no terminal "php artisan key:generate" para gerar a chave de aplicação
+
+4) configurar o arquivo .env com o banco de dados mysql
+ ex:
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=(colocar um schema/database existente)
+    DB_USERNAME=(usuario)
+    DB_PASSWORD=(caso tenha senha colocar)
+
+5) gerar uma migração para o banco de dados e criar tabelas no banco de dados:
+-> executar o comando no terminal "php artisan migrate --seed" usar a flag "seed" para popular o banco de dados com dados ficticios
+
+6) Iniciar um servidor web local 
+-> executar o comando no terminal "php artisan serve"
+
+7) Ir ate a url http://localhost:8000 com o navegador
+
+configurações
+vscode
+mysql 8.0
+Composer version 2.7.8 2024-08-22 
+PHP version 8.2.12 (C:\xampp\php\php.exe)
